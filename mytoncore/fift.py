@@ -5,8 +5,8 @@ class Fift:
 	def __init__(self, local):
 		self.local = local
 		self.appPath = "/opt/tonmain/core/fift"
-		self.libsPath = ""
-		self.smartcontsPath = "/mnt/tonmain/node/validator/contracts"
+		self.libsPath = "/opt/tonmain/core/libs"
+		self.smartcontsPath = "/opt/tonmain/core/smartcont"
 	#end define
 
 	def Run(self, args, **kwargs):
