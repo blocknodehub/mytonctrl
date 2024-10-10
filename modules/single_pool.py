@@ -47,10 +47,10 @@ class SingleNominatorModule(PoolModule):
         self.do_create_single_pool(pool_name, owner_wallet_name)
         color_print("new_single_pool - {green}OK{endc}")
 
-    def do_activate_single_pool(self, pool):
+    def do_activate_single_pool(self, pool, owner_wallet_name):
         self.local.add_log("start activate_single_pool function", "debug")
         boc_mode = "--with-init"
-        validator_wallet = self.ton.GetValidatorWallet()
+        validator_wallet = self.ton.GetLocalWallet(owner_wallet_name)
         self.ton.check_account_active(validator_wallet.addrB64)
         result_file_path = self.ton.SignBocWithWallet(validator_wallet, pool.bocFilePath, pool.addrB64_init, 1, boc_mode=boc_mode)
         self.ton.SendFile(result_file_path, validator_wallet)
@@ -58,14 +58,15 @@ class SingleNominatorModule(PoolModule):
     def activate_single_pool(self, args):
         try:
             pool_name = args[0]
+            owner_wallet_name = args[1]
         except:
-            color_print("{red}Bad args. Usage:{endc} activate_single_pool <pool-name>")
+            color_print("{red}Bad args. Usage:{endc} activate_single_pool <pool-name> <owner_wallet_name>")
             return
         pool = self.ton.GetLocalPool(pool_name)
         if not os.path.isfile(pool.bocFilePath):
             self.local.add_log(f"Pool {pool_name} already activated", "warning")
             return
-        self.do_activate_single_pool(pool)
+        self.do_activate_single_pool(pool, owner_wallet_name)
         color_print("activate_single_pool - {green}OK{endc}")
 
     def withdraw_from_single_pool(self, args):
