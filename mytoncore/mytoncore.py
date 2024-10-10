@@ -1152,7 +1152,7 @@ class MyTonCore():
 			raise Exception("Find bounceable flag, but destination account is not active. Use non-bounceable address or flag -n")
 		#end if
 
-		seqno = self.GetSeqno(wallet)
+		seqno = str(self.GetSeqno(wallet))
 		result_file_path = self.tempDir + self.nodeName + wallet.name + "_wallet-query"
 		if "v1" in wallet.version:
 			fift_script = "wallet.fif"
