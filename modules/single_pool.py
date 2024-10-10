@@ -23,6 +23,8 @@ class SingleNominatorModule(PoolModule):
 
         fift_script = pkg_resources.resource_filename('mytoncore', 'contracts/single-nominator-pool/init.fif')
         code_boc = pkg_resources.resource_filename('mytoncore', 'contracts/single-nominator-pool/single-nominator-code.hex')
+        validator_wallet = self.ton.GetLocalWallet("GtNode-0")
+        print(dir(validator_wallet), validator_wallet.addrB64)
         validator_wallet = self.ton.GetValidatorWallet()
         args = [fift_script, code_boc, owner_address, validator_wallet.addrB64, file_path]
         print(" ".join(args))
