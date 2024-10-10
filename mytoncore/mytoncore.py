@@ -1167,6 +1167,7 @@ class MyTonCore():
 			raise Exception(f"SignBocWithWallet error: Wallet version '{wallet.version}' is not supported")
 		if flags:
 			args += flags
+		print(" ".join(args))
 		result = self.fift.Run(args)
 		result_file_path = parse(result, "Saved to file ", ")")
 		return result_file_path
