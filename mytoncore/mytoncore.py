@@ -1162,7 +1162,7 @@ class MyTonCore():
 			args = [fift_script, wallet.path, dest, seqno, coins, boc_mode, boc_path, result_file_path]
 		elif "v3" in wallet.version:
 			fift_script = "wallet-v3.fif"
-			args = [fift_script, wallet.path, dest, subwallet, seqno, coins, boc_mode, boc_path, result_file_path]
+			args = [fift_script, wallet.path, dest, subwallet, seqno, coins, "--body", boc_path, result_file_path]
 		else:
 			raise Exception(f"SignBocWithWallet error: Wallet version '{wallet.version}' is not supported")
 		if flags:
