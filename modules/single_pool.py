@@ -22,8 +22,8 @@ class SingleNominatorModule(PoolModule):
             return
 
         fift_script = pkg_resources.resource_filename('mytoncore', 'contracts/single-nominator-pool/init.fif')
-        code_boc = pkg_resources.resource_filename('mytoncore',
-                                                   'contracts/single-nominator-pool/single-nominator-code.hex')
+        code_boc = pkg_resources.resource_filename('mytoncore', 'contracts/single-nominator-pool/single-nominator-code.hex')
+        print(fift_script, code_boc)
         validator_wallet = self.ton.GetValidatorWallet()
         args = [fift_script, code_boc, owner_address, validator_wallet.addrB64, file_path]
         result = self.ton.fift.Run(args)
