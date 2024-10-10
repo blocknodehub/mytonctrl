@@ -70,7 +70,7 @@ def Init(local, console):
 	console.AddItem("status", inject_globals(Status), "Print TON component status")
 	console.AddItem("set_node_argument", inject_globals(set_node_argument), "Set node argument")
 	console.AddItem("enable", inject_globals(Enable), "Enable some function")
-	console.AddItem("update", inject_globals(Enable), "Update some function: 'JR' - jsonrpc.  Example: 'update JR'") 
+	console.AddItem("update", inject_globals(Enable), "Update some function: 'JR' - jsonrpc.  Example: 'update JR'")
 	console.AddItem("plsc", inject_globals(PrintLiteServerConfig), "Print lite-server config")
 	console.AddItem("clcf", inject_globals(CreateLocalConfigFile), "Create lite-server config file")
 	console.AddItem("print_ls_proxy_config", inject_globals(print_ls_proxy_config), "Print ls-proxy config")
@@ -86,28 +86,24 @@ def Refresh(local):
 	user = local.buffer.user
 	local.buffer.mconfig_path = "/home/{user}/.local/share/mytoncore/mytoncore.db".format(user=user)
 	if user == 'root':
-		local.buffer.mconfig_path = "/usr/local/bin/mytoncore/mytoncore.db"
+		local.buffer.mconfig_path = "/mnt/tonmain/node/validator/mytoncore.db"
 	#end if
 
 	# create variables
-	bin_dir = "/usr/bin/"
-	src_dir = "/usr/src/"
-	ton_work_dir = "/var/ton-work/"
-	ton_bin_dir = bin_dir + "ton/"
-	ton_src_dir = src_dir + "ton/"
+	bin_dir = "/opt/tonmain/core"
+	ton_work_dir = "/mnt/tonmain/node/data"
 	local.buffer.bin_dir = bin_dir
-	local.buffer.src_dir = src_dir
 	local.buffer.ton_work_dir = ton_work_dir
-	local.buffer.ton_bin_dir = ton_bin_dir
-	local.buffer.ton_src_dir = ton_src_dir
-	ton_db_dir = ton_work_dir + "db/"
-	keys_dir = ton_work_dir + "keys/"
+	local.buffer.ton_bin_dir = bin_dir
+
+	ton_db_dir = "/mnt/tonmain/node/data"
+	keys_dir = "/mnt/tonmain/conf/keys"
 	local.buffer.ton_db_dir = ton_db_dir
 	local.buffer.keys_dir = keys_dir
-	local.buffer.ton_log_path = ton_work_dir + "log"
-	local.buffer.validator_app_path = ton_bin_dir + "validator-engine/validator-engine"
-	local.buffer.global_config_path = ton_bin_dir + "global.config.json"
-	local.buffer.vconfig_path = ton_db_dir + "config.json"
+	local.buffer.ton_log_path = "/mnt/tonmain/log"
+	local.buffer.validator_app_path = bin_dir + "/validator-engine"
+	local.buffer.global_config_path = "/mnt/tonmain/conf/global.json"
+	local.buffer.vconfig_path = "/mnt/tonmain/node/data/config.json"
 #end define
 
 

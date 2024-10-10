@@ -4,14 +4,13 @@ import subprocess
 class Fift:
 	def __init__(self, local):
 		self.local = local
-		self.appPath = None
-		self.libsPath = None
-		self.smartcontsPath = None
+		self.appPath = "/opt/tonmain/core/fift"
+		self.libsPath = ""
+		self.smartcontsPath = "/mnt/tonmain/node/validator/contracts"
 	#end define
 
 	def Run(self, args, **kwargs):
-		fift_timeout = self.local.db.fift_timeout if self.local.db.fift_timeout else 3
-		timeout = kwargs.get("timeout", fift_timeout)
+		timeout = kwargs.get("timeout", 60)
 		for i in range(len(args)):
 			args[i] = str(args[i])
 		includePath = self.libsPath + ':' + self.smartcontsPath
