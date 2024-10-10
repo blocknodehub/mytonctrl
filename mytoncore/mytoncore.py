@@ -1228,6 +1228,7 @@ class MyTonCore():
 		for i in range(steps):
 			time.sleep(timesleep)
 			seqno = self.GetSeqno(wallet)
+			print(seqno, wallet.oldseqno)
 			if seqno != wallet.oldseqno:
 				return
 		raise Exception("WaitTransaction error: time out")
