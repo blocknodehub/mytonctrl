@@ -15,6 +15,7 @@ class Fift:
 			args[i] = str(args[i])
 		includePath = self.libsPath + ':' + self.smartcontsPath
 		args = [self.appPath, "-I", includePath, "-s"] + args
+		print(" ".join(args))
 		process = subprocess.run(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout)
 		output = process.stdout.decode("utf-8")
 		err = process.stderr.decode("utf-8")
