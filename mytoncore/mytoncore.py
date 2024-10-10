@@ -1152,7 +1152,7 @@ class MyTonCore():
 			raise Exception("Find bounceable flag, but destination account is not active. Use non-bounceable address or flag -n")
 		#end if
 
-		seqno = str(self.GetSeqno(wallet))
+		seqno = self.GetSeqno(wallet)
 		result_file_path = self.tempDir + self.nodeName + wallet.name + "_wallet-query"
 		if "v1" in wallet.version:
 			fift_script = "wallet.fif"
@@ -1167,7 +1167,7 @@ class MyTonCore():
 			raise Exception(f"SignBocWithWallet error: Wallet version '{wallet.version}' is not supported")
 		if flags:
 			args += flags
-		print(" ".join(args))
+		print(args)
 		result = self.fift.Run(args)
 		result_file_path = parse(result, "Saved to file ", ")")
 		return result_file_path
