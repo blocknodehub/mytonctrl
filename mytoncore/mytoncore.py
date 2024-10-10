@@ -651,7 +651,7 @@ class MyTonCore():
 		#cmd = f"gethead {block}"
 		#result = self.liteClient.Run(cmd)
 		#seqno =  parse(result, "prev_key_block_seqno=", '\n')
-		statesDir = "/var/ton-work/db/archive/states"
+		statesDir = "/mnt/tonmain/node/data/archive/states"
 		os.chdir(statesDir)
 		files = filter(os.path.isfile, os.listdir(statesDir))
 		files = [os.path.join(statesDir, f) for f in files] # add path to each file
@@ -1619,7 +1619,7 @@ class MyTonCore():
 		if os.path.isfile(wallet_path + ".pk") and "v3" not in version:
 			self.local.add_log("CreateWallet error: Wallet already exists: " + name, "warning")
 		else:
-			fift_args = self.get_new_wallet_fift_args(version, workchain=workchain, 
+			fift_args = self.get_new_wallet_fift_args(version, workchain=workchain,
 				wallet_path=wallet_path, subwallet=subwallet)
 			result = self.fift.Run(fift_args)
 			if "Creating new" not in result:
@@ -1676,7 +1676,7 @@ class MyTonCore():
 		wallet_path = self.walletsDir + wallet_name
 		with open(wallet_path + ".pk", 'wb') as file:
 			file.write(pk_bytes)
-		fift_args = self.get_new_wallet_fift_args(version, workchain=workchain, 
+		fift_args = self.get_new_wallet_fift_args(version, workchain=workchain,
 			wallet_path=wallet_path, subwallet=subwallet)
 		result = self.fift.Run(fift_args)
 		if "Creating new" not in result:
@@ -2578,7 +2578,7 @@ class MyTonCore():
 	#end define
 
 	def GetDbUsage(self):
-		path = "/var/ton-work/db"
+		path = "/mnt/tonmain/node/data"
 		data = psutil.disk_usage(path)
 		return data.percent
 	#end define
@@ -2587,7 +2587,7 @@ class MyTonCore():
 		self.local.add_log("start GetDbSize function", "debug")
 		exceptions = exceptions.split()
 		totalSize = 0
-		path = "/var/ton-work/"
+		path = "/mnt/tonmain/node"
 		for directory, subdirectory, files in os.walk(path):
 			for file in files:
 				buff = file.split('.')

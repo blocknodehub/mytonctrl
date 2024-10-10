@@ -71,8 +71,8 @@ def get_db_stats():
             'data': {}
         },
     }
-    rocksdb_stats_path = '/var/ton-work/db/db_stats.txt'
-    celldb_stats_path = '/var/ton-work/db/celldb/db_stats.txt'
+    rocksdb_stats_path = '/mnt/tonmain/node/data/db_stats.txt'
+    celldb_stats_path = '/mnt/tonmain/node/data/celldb/db_stats.txt'
     if os.path.exists(rocksdb_stats_path):
         try:
             result['rocksdb']['data'] = parse_db_stats(rocksdb_stats_path)

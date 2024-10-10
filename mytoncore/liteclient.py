@@ -5,24 +5,21 @@ import subprocess
 class LiteClient:
 	def __init__(self, local):
 		self.local = local
-		self.appPath = None
-		self.configPath = None
-		self.pubkeyPath = None
-		self.addr = None
-		self.ton = None # magic
+		self.appPath = "/opt/tonmain/core/lite-client"
+		self.configPath = "/mnt/tonmain/conf/global.json"
+		self.pubkeyPath = "/mnt/tonmain/conf/keys/liteserver.pub"
+		self.addr = "127.0.0.1:43679"
 	#end define
 
 	def Run(self, cmd, **kwargs):
 		index = kwargs.get("index")
-		liteclient_timeout = self.local.db.liteclient_timeout if self.local.db.liteclient_timeout else 3
-		timeout = kwargs.get("timeout", liteclient_timeout)
+		timeout = kwargs.get("timeout", 60)
 		useLocalLiteServer = kwargs.get("useLocalLiteServer", True)
-		validator_status = self.ton.GetValidatorStatus()
 		args = [self.appPath, "--global-config", self.configPath, "--verbosity", "0", "--cmd", cmd]
 		if index is not None:
 			index = str(index)
 			args += ["-i", index]
-		elif useLocalLiteServer and self.pubkeyPath and validator_status.out_of_sync and validator_status.out_of_sync < 20:
+		elif useLocalLiteServer and self.pubkeyPath:
 			args = [self.appPath, "--addr", self.addr, "--pub", self.pubkeyPath, "--verbosity", "0", "--cmd", cmd]
 		else:
 			liteServers = self.local.db.get("liteServers")
@@ -31,6 +28,7 @@ class LiteClient:
 				index = str(index)
 				args += ["-i", index]
 		#end if
+		print(" ".join(args))
 
 		process = subprocess.run(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout)
 		output = process.stdout.decode("utf-8")

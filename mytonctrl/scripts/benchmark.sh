@@ -7,8 +7,8 @@ if [ "$(id -u)" != "0" ]; then
 	exit 1
 fi
 
-file_path=/var/ton-work/db/test.img
-db_path=/var/ton-work/db/bench
+file_path=/mnt/tonmain/node/data/test.img
+db_path=/mnt/tonmain/node/data/bench
 
 function get_fio_json {
 	read_iops=$(echo "$1" | grep "read:" | awk '{print $2}' | awk -F '=' '{print $2}')

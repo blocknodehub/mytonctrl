@@ -9,10 +9,10 @@ import json
 import pkg_resources
 
 from mypylib.mypylib import (
-	add2systemd, 
-	get_dir_from_path, 
-	run_as_root, 
-	color_print, 
+	add2systemd,
+	get_dir_from_path,
+	run_as_root,
+	color_print,
 	ip2int,
 	Dict
 )
@@ -110,7 +110,7 @@ def DownloadDump(local):
 	os.system(cmd)
 
 	# download dump
-	cmd = "curl -s {url}/dumps/latest.tar.lz | pv | plzip -d -n8 | tar -xC /var/ton-work/db".format(url=url)
+	cmd = "curl -s {url}/dumps/latest.tar.lz | pv | plzip -d -n8 | tar -xC /mnt/tonmain/node/data".format(url=url)
 	os.system(cmd)
 #end define
 
@@ -665,7 +665,7 @@ def DangerousRecoveryValidatorConfigFile(local):
 
 	# Get keys from keyring
 	keys = list()
-	keyringDir = "/var/ton-work/db/keyring/"
+	keyringDir = "/mnt/tonmain/node/data/keyring/"
 	keyring = os.listdir(keyringDir)
 	os.chdir(keyringDir)
 	sorted(keyring, key=os.path.getmtime)
@@ -758,7 +758,7 @@ def DangerousRecoveryValidatorConfigFile(local):
 	vconfig.control = [buff]
 
 	# Get dht fragment
-	files = os.listdir("/var/ton-work/db")
+	files = os.listdir("/mnt/tonmain/node/data")
 	for item in files:
 		if item[:3] == "dht":
 			dhtS = item[4:]

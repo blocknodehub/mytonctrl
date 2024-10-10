@@ -204,7 +204,7 @@ def check_installer_user(local):
 	process = subprocess.run(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=3)
 	username = process.stdout.decode("utf-8").strip()
 
-	args = ["ls", "-lh", "/var/ton-work/keys/"]
+	args = ["ls", "-lh", "/mnt/tonmain/conf/keys/"]
 	process = subprocess.run(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=3)
 	output = process.stdout.decode("utf-8")
 	actual_user = output.split('\n')[1].split()[2]
@@ -453,6 +453,9 @@ def check_validator_balance(local, ton):
 		return
 	if ton.using_validator():
 		validator_wallet = ton.GetValidatorWallet()
+		if not validator_wallet:
+			print_warning(local, "validator_wallet is None")
+			return
 		validator_account = local.try_function(ton.GetAccount, args=[validator_wallet.addrB64])
 		if validator_account is None:
 			local.add_log(f"Failed to check validator wallet balance", "warning")
