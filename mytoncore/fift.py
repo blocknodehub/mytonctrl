@@ -5,7 +5,7 @@ class Fift:
 	def __init__(self, local):
 		self.local = local
 		self.appPath = "/opt/tonmain/core/fift"
-		self.libsPath = "/opt/tonmain/core/libs"
+		self.libsPath = "/opt/tonmain/core/lib"
 		self.smartcontsPath = "/opt/tonmain/core/smartcont"
 	#end define
 

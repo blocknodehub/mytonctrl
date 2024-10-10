@@ -37,11 +37,11 @@ from mypylib.mypylib import (
 class MyTonCore():
 	def __init__(self, local):
 		self.local = local
-		self.walletsDir = "/mnt/tonmain/node/validator/wallets"
-		self.dbFile = "/mnt/tonmain/node/data"
-		self.contractsDir = "/mnt/tonmain/node/validator/contracts"
-		self.poolsDir = "/mnt/tonmain/node/validator/pools"
-		self.tempDir = "/tmp"
+		self.walletsDir = "/mnt/tonmain/node/validator/wallets/"
+		self.dbFile = "/mnt/tonmain/node/data/"
+		self.contractsDir = "/mnt/tonmain/node/validator/contracts/"
+		self.poolsDir = "/mnt/tonmain/node/validator/pools/"
+		self.tempDir = "/tmp/"
 		self.nodeName = ""
 
 		self.liteClient = LiteClient(self.local)
