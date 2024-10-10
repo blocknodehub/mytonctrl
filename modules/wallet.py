@@ -28,6 +28,9 @@ class WalletModule(MtcModule):
         except:
             color_print("{red}Bad args. Usage:{endc} nw <workchain-id> <wallet-name> [<version> <subwallet>]")
             return
+        print("walletName", walletName)
+        print("workchain", workchain)
+        print("version", version)
         wallet = self.ton.CreateWallet(walletName, workchain, version, subwallet=subwallet)
         table = list()
         table += [["Name", "Workchain", "Address"]]
