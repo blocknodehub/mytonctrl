@@ -1163,7 +1163,7 @@ class MyTonCore():
 		elif "v3" in wallet.version:
 			fift_script = "wallet-v3.fif"
 			if "--with-init" in boc_mode:
-				fift_script = "/opt/tonmain/core/mytonctrl/mytoncore/contracts/single-nominator-pool/wallet-v3.fif"
+				fift_script = pkg_resources.resource_filename('mytoncore', 'contracts/single-nominator-pool/wallet-v3.fif')
 			args = [fift_script, wallet.path, dest, subwallet, seqno, coins, boc_mode, boc_path, result_file_path]
 		else:
 			raise Exception(f"SignBocWithWallet error: Wallet version '{wallet.version}' is not supported")
@@ -3276,9 +3276,9 @@ class MyTonCore():
 		#end if
 	#end define
 
-	def WithdrawFromPoolProcess(self, poolAddr, owner_wallet_name, amount):
+	def WithdrawFromPoolProcess(self, poolAddr, validator_wallet_name, amount):
 		self.local.add_log("start WithdrawFromPoolProcess function", "debug")
-		validator_wallet = self.ton.GetLocalWallet(owner_wallet_name)
+		validator_wallet = self.ton.GetLocalWallet(validator_wallet_name)
 		bocPath = self.local.buffer.my_temp_dir + validator_wallet.name + "validator-withdraw-query.boc"
 		fiftScript = self.contractsDir + "nominator-pool/func/validator-withdraw.fif"
 		args = [fiftScript, amount, bocPath]

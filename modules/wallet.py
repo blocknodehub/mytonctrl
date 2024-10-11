@@ -1,6 +1,5 @@
 import base64
 import os
-import pkg_resources
 
 from modules.module import MtcModule
 from mypylib.mypylib import color_print, print_table
@@ -86,7 +85,6 @@ class WalletModule(MtcModule):
             seqno = self.ton.GetSeqno(wallet)
             table += [[wallet.name, account.status, account.balance, wallet.version, wallet.workchain, wallet.addrB64, seqno]]
         print_table(table)
-        print(pkg_resources.resource_filename('mytoncore', 'contracts/single-nominator-pool/wallet-v3.fif'))
     # end define
 
     def do_import_wallet(self, addr_b64, key):
