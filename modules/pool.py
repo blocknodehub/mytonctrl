@@ -79,7 +79,6 @@ class PoolModule(MtcModule):
 
     def do_withdraw_from_pool(self, pool_addr, amount):
         pool_data = self.ton.GetPoolData(pool_addr)
-        print("state", pool_data["state"])
         if pool_data["state"] == 0:
             self.ton.WithdrawFromPoolProcess(pool_addr, amount)
         else:

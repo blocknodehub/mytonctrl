@@ -72,11 +72,12 @@ class SingleNominatorModule(PoolModule):
     def withdraw_from_single_pool(self, args):
         try:
             pool_addr = args[0]
-            amount = float(args[1])
+            owner_wallet_name = args[1]
+            amount = float(args[2])
         except:
-            color_print("{red}Bad args. Usage:{endc} withdraw_from_single_pool <pool-addr> <amount>")
+            color_print("{red}Bad args. Usage:{endc} withdraw_from_single_pool <pool-addr> <owner_wallet_name> <amount>")
             return
-        self.ton.WithdrawFromPoolProcess(pool_addr, amount)
+        self.ton.WithdrawFromPoolProcess(pool_addr, owner_wallet_name, amount)
         color_print("withdraw_from_single_pool - {green}OK{endc}")
     #end define
 

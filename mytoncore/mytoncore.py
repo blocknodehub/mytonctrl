@@ -3270,15 +3270,15 @@ class MyTonCore():
 		#end if
 	#end define
 
-	def WithdrawFromPoolProcess(self, poolAddr, amount):
+	def WithdrawFromPoolProcess(self, poolAddr, owner_wallet_name, amount):
 		self.local.add_log("start WithdrawFromPoolProcess function", "debug")
-		wallet = self.GetValidatorWallet()
-		bocPath = self.local.buffer.my_temp_dir + wallet.name + "validator-withdraw-query.boc"
+		validator_wallet = self.ton.GetLocalWallet(owner_wallet_name)
+		bocPath = self.local.buffer.my_temp_dir + validator_wallet.name + "validator-withdraw-query.boc"
 		fiftScript = self.contractsDir + "nominator-pool/func/validator-withdraw.fif"
 		args = [fiftScript, amount, bocPath]
 		result = self.fift.Run(args)
-		resultFilePath = self.SignBocWithWallet(wallet, bocPath, poolAddr, 1.35)
-		self.SendFile(resultFilePath, wallet)
+		resultFilePath = self.SignBocWithWallet(validator_wallet, bocPath, poolAddr, 1.35)
+		self.SendFile(resultFilePath, validator_wallet)
 	#end define
 
 	def PendWithdrawFromPool(self, poolAddr, amount):
@@ -3437,9 +3437,7 @@ class MyTonCore():
 		result = self.liteClient.Run(cmd)
 		data = self.Result2List(result)
 		if data is None:
-			print("data is None")
 			return
-		print(data)
 		poolConfig = dict()
 		poolConfig["validatorAddress"] = data[4]
 		poolConfig["validatorRewardShare"] = data[5]
