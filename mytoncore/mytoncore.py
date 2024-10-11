@@ -3295,7 +3295,7 @@ class MyTonCore():
 		# fiftScript = pkg_resources.resource_filename('mytoncore', 'contracts/single-nominator-pool/validator-withdraw.fif')
 		bocPath = self.local.buffer.my_temp_dir + validator_wallet.name + ".withdraw-query.boc"
 		fiftScript = pkg_resources.resource_filename('mytoncore', 'contracts/single-nominator-pool/withdraw.fif')
-		args = [fiftScript, amount, bocPath]
+		args = [fiftScript, amount]
 		result = self.fift.Run(args, excludeContracts=True)
 		savedFilePath = parse(result, "Saved witdhraw query to file to file ", ")")
 		print(result, savedFilePath)
