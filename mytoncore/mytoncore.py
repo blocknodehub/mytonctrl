@@ -3279,7 +3279,7 @@ class MyTonCore():
 
 	def WithdrawFromPoolProcess(self, poolAddr, validator_wallet_name, amount):
 		self.local.add_log("start WithdrawFromPoolProcess function", "debug")
-		validator_wallet = self.ton.GetLocalWallet(validator_wallet_name)
+		validator_wallet = self.GetLocalWallet(validator_wallet_name)
 		bocPath = self.local.buffer.my_temp_dir + validator_wallet.name + "validator-withdraw-query.boc"
 		fiftScript = self.contractsDir + "nominator-pool/func/validator-withdraw.fif"
 		args = [fiftScript, amount, bocPath]
@@ -3290,7 +3290,7 @@ class MyTonCore():
 
 	def WithdrawFromSinglePoolProcess(self, poolAddr, validator_wallet_name, amount):
 		self.local.add_log("start WithdrawFromSinglePoolProcess function", "debug")
-		validator_wallet = self.ton.GetLocalWallet(validator_wallet_name)
+		validator_wallet = self.GetLocalWallet(validator_wallet_name)
 		bocPath = self.local.buffer.my_temp_dir + validator_wallet.name + "validator-withdraw-query.boc"
 		fiftScript = pkg_resources.resource_filename('mytoncore', 'contracts/single-nominator-pool/validator-withdraw.fif')
 		args = [fiftScript, amount, bocPath]
