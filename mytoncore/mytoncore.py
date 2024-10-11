@@ -1136,6 +1136,7 @@ class MyTonCore():
 		subwalletDefault = 698983191 + wallet.workchain # 0x29A9A317 + workchain
 		subwallet = kwargs.get("subwallet", subwalletDefault)
 		boc_mode = kwargs.get("boc_mode", "--body")
+		is_single_nominator_pool = kwargs.get("is_single_nominator_pool", False)
 
 		# Balance checking
 		account = self.GetAccount(wallet.addrB64)
@@ -1162,7 +1163,7 @@ class MyTonCore():
 			args = [fift_script, wallet.path, dest, seqno, coins, boc_mode, boc_path, result_file_path]
 		elif "v3" in wallet.version:
 			fift_script = "wallet-v3.fif"
-			if "--with-init" in boc_mode:
+			if is_single_nominator_pool:
 				fift_script = pkg_resources.resource_filename('mytoncore', 'contracts/single-nominator-pool/wallet-v3.fif')
 			args = [fift_script, wallet.path, dest, subwallet, seqno, coins, boc_mode, boc_path, result_file_path]
 		else:
@@ -1170,7 +1171,7 @@ class MyTonCore():
 		if flags:
 			args += flags
 		result_file_path = ""
-		if "v3" in wallet.version and "--with-init" in boc_mode:
+		if is_single_nominator_pool:
 			result = self.fift.Run(args, excludeContracts=True)
 			result_file_path = parse(result, "Saved to file ", ")")
 		else:
@@ -3282,8 +3283,19 @@ class MyTonCore():
 		bocPath = self.local.buffer.my_temp_dir + validator_wallet.name + "validator-withdraw-query.boc"
 		fiftScript = self.contractsDir + "nominator-pool/func/validator-withdraw.fif"
 		args = [fiftScript, amount, bocPath]
-		result = self.fift.Run(args)
+		self.fift.Run(args)
 		resultFilePath = self.SignBocWithWallet(validator_wallet, bocPath, poolAddr, 1.35)
+		self.SendFile(resultFilePath, validator_wallet)
+	#end define
+
+	def WithdrawFromSinglePoolProcess(self, poolAddr, validator_wallet_name, amount):
+		self.local.add_log("start WithdrawFromSinglePoolProcess function", "debug")
+		validator_wallet = self.ton.GetLocalWallet(validator_wallet_name)
+		bocPath = self.local.buffer.my_temp_dir + validator_wallet.name + "validator-withdraw-query.boc"
+		fiftScript = pkg_resources.resource_filename('mytoncore', 'contracts/single-nominator-pool/validator-withdraw.fif')
+		args = [fiftScript, amount, bocPath]
+		self.fift.Run(args)
+		resultFilePath = self.SignBocWithWallet(validator_wallet, bocPath, poolAddr, 1.35, is_single_nominator_pool=True)
 		self.SendFile(resultFilePath, validator_wallet)
 	#end define
 

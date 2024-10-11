@@ -53,7 +53,7 @@ class SingleNominatorModule(PoolModule):
         boc_mode = "--with-init"
         validator_wallet = self.ton.GetLocalWallet(validator_wallet_name)
         self.ton.check_account_active(validator_wallet.addrB64)
-        result_file_path = self.ton.SignBocWithWallet(validator_wallet, pool.bocFilePath, pool.addrB64_init, 1, boc_mode=boc_mode)
+        result_file_path = self.ton.SignBocWithWallet(validator_wallet, pool.bocFilePath, pool.addrB64_init, 1, boc_mode=boc_mode, is_single_nominator_pool=True)
         self.ton.SendFile(result_file_path, validator_wallet)
 
     def activate_single_pool(self, args):
@@ -78,7 +78,7 @@ class SingleNominatorModule(PoolModule):
         except:
             color_print("{red}Bad args. Usage:{endc} withdraw_from_single_pool <pool-addr> <validator_wallet_name> <amount>")
             return
-        self.ton.WithdrawFromPoolProcess(pool_addr, validator_wallet_name, amount)
+        self.ton.WithdrawFromSinglePoolProcess(pool_addr, validator_wallet_name, amount)
         color_print("withdraw_from_single_pool - {green}OK{endc}")
     #end define
 
