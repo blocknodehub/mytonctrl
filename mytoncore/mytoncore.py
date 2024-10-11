@@ -1162,14 +1162,20 @@ class MyTonCore():
 			args = [fift_script, wallet.path, dest, seqno, coins, boc_mode, boc_path, result_file_path]
 		elif "v3" in wallet.version:
 			fift_script = "wallet-v3.fif"
+			if "--with-init" in boc_mode:
+				fift_script = "/opt/tonmain/core/mytonctrl/mytoncore/contracts/single-nominator-pool/wallet-v3.fif"
 			args = [fift_script, wallet.path, dest, subwallet, seqno, coins, boc_mode, boc_path, result_file_path]
 		else:
 			raise Exception(f"SignBocWithWallet error: Wallet version '{wallet.version}' is not supported")
 		if flags:
 			args += flags
-		print(args)
-		result = self.fift.Run(args)
-		result_file_path = parse(result, "Saved to file ", ")")
+		result_file_path = ""
+		if "v3" in wallet.version and "--with-init" in boc_mode:
+			result = self.fift.Run(args, excludeContracts=True)
+			result_file_path = parse(result, "Saved to file ", ")")
+		else:
+			result = self.fift.Run(args)
+			result_file_path = parse(result, "Saved to file ", ")")
 		return result_file_path
 	#end define
 
