@@ -82,7 +82,7 @@ class WalletModule(MtcModule):
             account = self.ton.GetAccount(wallet.addrB64)
             if account.status != "active":
                 wallet.addrB64 = wallet.addrB64_init
-            seqno = self.GetSeqno(wallet)
+            seqno = self.ton.GetSeqno(wallet)
             table += [[wallet.name, account.status, account.balance, wallet.version, wallet.workchain, wallet.addrB64, seqno]]
         print_table(table)
     # end define
