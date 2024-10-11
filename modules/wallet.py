@@ -73,7 +73,7 @@ class WalletModule(MtcModule):
 
     def print_wallets_list(self, args):
         table = list()
-        table += [["Name", "Status", "Balance", "Ver", "Wch", "Address"]]
+        table += [["Name", "Status", "Balance", "Ver", "Wch", "Address", "Seqno"]]
         data = self.get_wallets()
         if data is None or len(data) == 0:
             print("No data")
@@ -82,6 +82,7 @@ class WalletModule(MtcModule):
             account = self.ton.GetAccount(wallet.addrB64)
             if account.status != "active":
                 wallet.addrB64 = wallet.addrB64_init
+            print(dir(wallet))
             table += [[wallet.name, account.status, account.balance, wallet.version, wallet.workchain, wallet.addrB64]]
         print_table(table)
     # end define
