@@ -3293,10 +3293,12 @@ class MyTonCore():
 		validator_wallet = self.GetLocalWallet(validator_wallet_name)
 		# bocPath = self.local.buffer.my_temp_dir + validator_wallet.name + "validator-withdraw-query.boc"
 		# fiftScript = pkg_resources.resource_filename('mytoncore', 'contracts/single-nominator-pool/validator-withdraw.fif')
-		bocPath = self.local.buffer.my_temp_dir + validator_wallet.name + "withdraw-query.boc"
+		bocPath = self.local.buffer.my_temp_dir + validator_wallet.name + ".withdraw-query.boc"
 		fiftScript = pkg_resources.resource_filename('mytoncore', 'contracts/single-nominator-pool/withdraw.fif')
 		args = [fiftScript, amount, bocPath]
-		self.fift.Run(args)
+		result = self.fift.Run(args, excludeContracts=True)
+		savedFilePath = parse(result, "Saved witdhraw query to file to file ", ")")
+		print(result, savedFilePath)
 		resultFilePath = self.SignBocWithWallet(validator_wallet, bocPath, poolAddr, 1.35, is_single_nominator_pool=True)
 		self.SendFile(resultFilePath, validator_wallet)
 	#end define
