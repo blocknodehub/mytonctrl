@@ -3298,7 +3298,7 @@ class MyTonCore():
 		args = [fiftScript, amount]
 		result = self.fift.Run(args, excludeContracts=True)
 		savedFilePath = parse(result, "Saved witdhraw query to file to file ", ")")
-		print(result, savedFilePath)
+		os.rename(savedFilePath, bocPath)
 		resultFilePath = self.SignBocWithWallet(validator_wallet, bocPath, poolAddr, 1.35, is_single_nominator_pool=True)
 		self.SendFile(resultFilePath, validator_wallet)
 	#end define
