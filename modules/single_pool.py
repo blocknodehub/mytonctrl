@@ -78,6 +78,7 @@ class SingleNominatorModule(PoolModule):
         except:
             color_print("{red}Bad args. Usage:{endc} withdraw_from_single_pool <pool-addr> <validator_wallet_name> <amount>")
             return
+        print("self.ton", self.ton)
         self.ton.WithdrawFromSinglePoolProcess(pool_addr, validator_wallet_name, amount)
         color_print("withdraw_from_single_pool - {green}OK{endc}")
     #end define
