@@ -3437,7 +3437,9 @@ class MyTonCore():
 		result = self.liteClient.Run(cmd)
 		data = self.Result2List(result)
 		if data is None:
+			print("data is None")
 			return
+		print(data)
 		poolConfig = dict()
 		poolConfig["validatorAddress"] = data[4]
 		poolConfig["validatorRewardShare"] = data[5]
