@@ -58,23 +58,24 @@ class PoolModule(MtcModule):
         if not os.path.isdir(contract_path):
             self.ton.DownloadContract("https://github.com/ton-blockchain/nominator-pool")
 
-    def do_deposit_to_pool(self, pool_addr, amount):
-        wallet = self.ton.GetValidatorWallet()
-        bocPath = self.ton.local.buffer.my_temp_dir + wallet.name + "validator-deposit-query.boc"
+    def do_deposit_to_pool(self, pool_addr, validator_wallet_name, amount):
+        validator_wallet = self.ton.GetLocalWallet(validator_wallet_name)
+        bocPath = self.ton.local.buffer.my_temp_dir + validator_wallet.name + "validator-deposit-query.boc"
         fiftScript = self.ton.contractsDir + "nominator-pool/func/validator-deposit.fif"
         args = [fiftScript, bocPath]
         result = self.ton.fift.Run(args)
-        resultFilePath = self.ton.SignBocWithWallet(wallet, bocPath, pool_addr, amount)
-        self.ton.SendFile(resultFilePath, wallet)
+        resultFilePath = self.ton.SignBocWithWallet(validator_wallet, bocPath, pool_addr, amount)
+        self.ton.SendFile(resultFilePath, validator_wallet)
 
     def deposit_to_pool(self, args):
         try:
             poll_addr = args[0]
-            amount = float(args[1])
+            validator_wallet_name = args[1]
+            amount = float(args[2])
         except:
-            color_print("{red}Bad args. Usage:{endc} deposit_to_pool <pool-addr> <amount>")
+            color_print("{red}Bad args. Usage:{endc} deposit_to_pool <pool-addr> <validator_wallet_name> <amount>")
             return
-        self.do_deposit_to_pool(poll_addr, amount)
+        self.do_deposit_to_pool(poll_addr, validator_wallet_name, amount)
         color_print("DepositToPool - {green}OK{endc}")
 
     def do_withdraw_from_pool(self, pool_addr, amount):
