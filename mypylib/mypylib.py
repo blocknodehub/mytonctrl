@@ -328,7 +328,7 @@ class MyPyClass:
 		'''return "/usr/local/bin/test/" or "/home/user/.local/share/test/"'''
 		if self.check_root_permission():
 			# https://ru.wikipedia.org/wiki/FHS
-			program_files_dir = "/mnt/tonmain/node/validator"
+			program_files_dir = "/mnt/tonmain/node/validator/"
 		else:
 			# https://habr.com/ru/post/440620/
 			user_home_dir = dir(os.getenv("HOME"))
